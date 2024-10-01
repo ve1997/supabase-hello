@@ -9,10 +9,12 @@
 		"format": "bunx biome format --write ./",
 		"lint": "bunx biome lint --write ./",
 		"check": "bunx biome check --write ./",
+		"gen-types": "supabase gen types typescript --project-id lrlxtblksxuagacqcrai > ./lib/database.types.ts",
 		"check-types": "tsc --noEmit",
 		"check-types:watch": "tsc --noEmit --watch"
 	},
 	"dependencies": {
+		"@supabase/supabase-js": "^2.45.4",
 		"@t3-oss/env-core": "^0.11.1",
 		"@t3-oss/env-nextjs": "^0.11.1",
 		"clsx": "^2.1.1",
