@@ -2,6 +2,7 @@ import type { Tables } from "@/lib/database.types";
 import { deleteTodo } from "@/lib/dbHandlers";
 import { TrashIcon } from "lucide-react";
 import { revalidatePath } from "next/cache";
+import { TodoItem } from "./todo-item";
 
 export function TodoList({ todos }: { todos: Array<Tables<"todo">> | null }) {
 	if (!todos) {
@@ -14,23 +15,7 @@ export function TodoList({ todos }: { todos: Array<Tables<"todo">> | null }) {
 					key={todo.id}
 					className="flex items-center justify-between rounded-md bg-gray-100 p-3"
 				>
-					<div className="flex items-center">
-						<input
-							type="checkbox"
-							id={`todo-${todo.id}`}
-							className="mr-2 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-						/>
-						<label
-							htmlFor={`todo-${todo.id}`}
-							className={`${
-								todo.isCompleted
-									? "text-gray-500 line-through"
-									: "text-gray-800"
-							}`}
-						>
-							{todo.title}
-						</label>
-					</div>
+					<TodoItem todo={todo} />
 					<form
 						action={async () => {
 							"use server";

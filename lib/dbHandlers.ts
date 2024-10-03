@@ -14,3 +14,11 @@ export const deleteTodo = async (id: number) => {
 	const deletedTodo = await supabase.from("todo").delete().match({ id });
 	return deletedTodo.error;
 };
+
+export const updateTodo = async (id: number, isCompleted: boolean) => {
+	const updatedTodo = await supabase
+		.from("todo")
+		.update({ isCompleted })
+		.match({ id });
+	return updatedTodo.error;
+};
