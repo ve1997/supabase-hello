@@ -1,5 +1,8 @@
 import type { Tables } from "@/lib/database.types";
+import { deleteTodo } from "@/lib/dbHandlers";
 import { TrashIcon } from "lucide-react";
+import { revalidatePath } from "next/cache";
+
 export function TodoList({ todos }: { todos: Array<Tables<"todo">> | null }) {
 	if (!todos) {
 		return <p>Loading...</p>;
@@ -28,13 +31,21 @@ export function TodoList({ todos }: { todos: Array<Tables<"todo">> | null }) {
 							{todo.title}
 						</label>
 					</div>
-					<button
-						type="button"
-						className="text-red-500 hover:text-red-700 focus:outline-none"
+					<form
+						action={async () => {
+							"use server";
+							await deleteTodo(todo.id);
+							revalidatePath("/");
+						}}
 					>
-						<TrashIcon className="h-5 w-5" />
-						<span className="sr-only">Delete Todo</span>
-					</button>
+						<button
+							type="submit"
+							className="text-red-500 hover:text-red-700 focus:outline-none"
+						>
+							<TrashIcon className="h-5 w-5" />
+							<span className="sr-only">Delete Todo</span>
+						</button>
+					</form>
 				</li>
 			))}
 		</ul>
